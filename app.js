@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 // Database connection
 // mongoose.Promise = global.Promise;
+mongoose.set('useCreateIndex', true);
 mongoose.connect('mongodb://localhost/ninjago', { useNewUrlParser: true })
 .then(()=>{
  console.log('Database connection OK');

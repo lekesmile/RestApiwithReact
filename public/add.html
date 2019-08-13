@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add a Ninja</title>
+</head>
+<body>
+
+    <div id="addNinja"></div>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+
+    <!-- Create React Component -->
+    <script type="text/babel">
+
+class Form extends React.Component{
+    render(){
+        return(
+          <div>
+              <form onSubmit={this.handleSubmit}></form>
+              <label for="ninjaName"></label>
+              <input type="name" placeholder="Ninja Name" />
+              <label for="rank"></label>
+              <input type="rank" placeholder="Ninja Rank" />
+              <label for="avaliable"></label>
+              <input type="avaliable" placeholder="Ninja avaliable" />
+              <label for="long"></label>
+              <input type="long" placeholder="Ninja long" />
+              <label for="lat"></label>
+              <input type="lat" placeholder="Ninja lat" />
+              <input type="button" value="add" />
+          </div>
+        )
+      
+      handleSubmit: (e)=>{
+       e.preventDefault();
+       let lng = this.refs.lng.value;
+       let lat = this.refs.lat.value;
+       fetch('/api/ninjas?lng=' + lng + '&lat=' + lat).then(function(data){
+       return data.json();
+       }).then( json => {
+       this.setState({
+       ninjas: json
+       });
+       console.log(json);
+       });
+       }
+    }
+        }
+     ReactDOM.render(
+     <Form />, document.getElementById('addNinja'));
+
+    </script>
+</body>
+</html>

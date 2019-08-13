@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Api</title>
+     <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <h1 class="title">Get A Ninja</h1>
+     <div id="ninja-container">
+         <form id="search" onsubmit="thety()" >
+             <label>Enter your Latitude:</label>
+             <input type="text" ref="lat" placeholder="latitude" required />
+             <label>Enter your Longitude:</label>
+             <input type="text" ref="lng" placeholder="longitude" required />
+             <input type="submit" value="Find Ninjas" />
+         </form>
+        <p></p>
+     </div>
+
+
+
+    <script>
+        
+      const thety = (e)=>{
+        e.preventDefault();
+     }
+
+      const getApi = ()=>{
+     document.querySelectorAll('input')[2].addEventListener('click', () =>{
+
+      const lng =  document.querySelectorAll('input')[0].value;
+      const lat = document.querySelectorAll('input')[1].value;
+      
+    
+      
+      fetch('/api/ninjas?lng=' + lng + '&lat=' + lat )
+      .then((res)=>{
+        return(res.json())
+          }).then((data)=>{
+            console.log(data);
+            let output = '<h2>Ninjas</h2>';
+            data.forEach((element)=>{
+            output += `
+            <ul>
+              <li>Name: ${element.name}</li>
+              <li>Rank: ${element.rank}</li>
+               <li>Distance: ${Math.floor(element.dist.calculated/ 1000)} km </li>
+            
+            </ul>
+            ` ;
+             });
+            document.querySelectorAll('p')[0].innerHTML= output;
+          }).catch(error => console.error(error));
+     
+      });
+     
+    }
+
+    getApi();
+     
+  
+   </script>
+</body>
+</html>

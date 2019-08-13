@@ -18,13 +18,15 @@ router.get('/ninjas', (req, res) => {
             maxDistance: 100000,
             spherical: true
         }
-    }]).then( (ninjas) => {
+    }])
+    .then( (ninjas) => {
         res.send(ninjas);
-    }).catch((e)=>{
-        console.log(e);
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(400).json('Error : ' + err)
     });
 });
-
 
 // Post into our database
 router.post('/ninjas', (req, res) => {
@@ -33,8 +35,10 @@ Ninja.create(req.body).then((ninja)=>{
  
     res.send(ninja);
     console.log("data saved to db");
-}).catch((err)=>{
+})
+.catch((err)=>{
     console.log(err.message);
+    res.status(400).json('Error : ' + err)
 });
 
    
@@ -50,6 +54,10 @@ router.put('/ninjas/:id', (req, res) => {
     .then((ninja)=>{
        res.send(ninja);
     })
+    .catch((err) => {
+        console.log(err.message);
+        res.status(400).json('Error : ' + err)
+    });
     });
 });
 
@@ -61,6 +69,10 @@ router.delete('/ninjas/:id', (req, res) => {
     .then((ninja)=>{
         res.send(ninja);
     })
+    .catch((err) => {
+        console.log(err.message);
+        res.status(400).json('Error : ' + err)
+    });
    
 })
 
